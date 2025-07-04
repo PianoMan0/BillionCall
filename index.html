@@ -2,14 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>BillionVideo</title>
+  <title>BillionCall</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>BillionVideo</h2>
-  <div>
-    <video id="localVideo" autoplay playsinline muted></video>
-    <video id="remoteVideo" autoplay playsinline></video>
+  <h2>BillionCall</h2>
+  <div id="container">
+    <div id="videos">
+      <video id="localVideo" autoplay playsinline muted></video>
+      <div id="controls">
+        <button id="muteBtn">Mute</button>
+        <button id="videoBtn">Video Off</button>
+      </div>
+    </div>
+    <div id="chat">
+      <div id="chat-messages"></div>
+      <form id="chat-form">
+        <input id="chat-input" autocomplete="off" placeholder="Type a message..." />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </div>
   <input id="roomInput" placeholder="Room name" />
   <button id="joinBtn">Join Room</button>

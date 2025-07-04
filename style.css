@@ -4,9 +4,65 @@ body {
   background: #eee;
 }
 
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+#videos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 video {
   width: 320px;
   height: 240px;
   margin: 10px;
   background: #000;
+  border: 2px solid #333;
+  border-radius: 5px;
+}
+
+#controls {
+  margin: 8px 0 0 0;
+  display: flex;
+  gap: 10px;
+}
+
+#chat {
+  width: 300px;
+  height: 400px;
+  margin-left: 24px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+#chat-form {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+#chat-form button {
+  padding: 8px 16px;
 }
