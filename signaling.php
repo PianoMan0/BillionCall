@@ -18,7 +18,7 @@ $admin_file = "$dir/$room-admin.json";
 
 $ROOM_ADMIN_PASSWORD = "GoDodgers!";
 
-// Helper: Get all users from JSON file
+// Get all users from JSON file
 function get_users($users_file) {
     if (!file_exists($users_file)) return [];
     $users = json_decode(file_get_contents($users_file), true);
@@ -29,7 +29,7 @@ function save_users($users_file, $users) {
     file_put_contents($users_file, json_encode($users));
 }
 
-// --- ADMIN LOGIN: returns a temporary token ---
+// --- ADMIN LOGIN ---
 if ($type === 'admin_login') {
     global $ROOM_ADMIN_PASSWORD, $admin_file, $admin_password;
     if ($admin_password === $ROOM_ADMIN_PASSWORD) {
@@ -45,7 +45,7 @@ function verify_admin($admin_file, $token) {
     if (!file_exists($admin_file)) return false;
     $admin = json_decode(file_get_contents($admin_file), true);
     if (!$admin || !isset($admin['token'])) return false;
-    // Token expires in 2 hours
+    // Token expires in 2 hours (note to self, this is just for testing, make it more in the future)
     if ($token === $admin['token'] && time() - $admin['time'] < 7200) return true;
     return false;
 }
@@ -54,7 +54,6 @@ function verify_admin($admin_file, $token) {
 if ($type === 'admin_action') {
     if (!verify_admin($admin_file, $admin_token)) { http_response_code(401); exit; }
     if ($action === 'kick' && $target) {
-        // Send a custom kick signal
         file_put_contents($signals_file, "ADMIN|$target|".json_encode(['type'=>'admin_kick','target'=>$target])."\n", FILE_APPEND);
     }
     if ($action === 'mute' && $target) {

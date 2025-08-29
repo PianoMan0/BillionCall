@@ -38,7 +38,7 @@ const endMeetingBtn = document.getElementById('endMeetingBtn');
 let isAdmin = false;
 let adminToken = null;
 
-// Helper: generate random user ID
+// Generate random user ID
 function genId() {
   return 'user-' + Math.floor(Math.random() * 1000000);
 }
@@ -559,7 +559,6 @@ function showAnalytics() {
   }
 }
 
-// --- Remove self from users file on page unload ---
 window.addEventListener('beforeunload', () => {
   if (room && userId) {
     navigator.sendBeacon('signaling.php', `room=${encodeURIComponent(room)}&user=${encodeURIComponent(userId)}&type=leave`);
