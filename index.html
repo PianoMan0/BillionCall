@@ -23,6 +23,17 @@
       </form>
     </div>
   </div>
+  <div id="adminLoginDiv">
+  <input type="password" id="adminPasswordInput" placeholder="Admin password">
+  <button id="adminLoginBtn">Login as Admin</button>
+  </div>
+
+  <div id="adminPanel" style="display:none;">
+  <h3>Admin Panel</h3>
+  <div id="adminUserList"></div>
+  <button id="endMeetingBtn" style="background:red;color:white;">End Meeting</button>
+  </div>
+  <button id="screenShareBtn">Share Screen</button>
   <input id="roomInput" placeholder="Room name" />
   <button id="joinBtn">Join Room</button>
   <script src="script.js"></script>

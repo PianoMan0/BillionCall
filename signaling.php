@@ -1,37 +1,117 @@
 <?php
-
 $room = $_POST['room'] ?? '';
 $user = $_POST['user'] ?? '';
 $type = $_POST['type'] ?? '';
 $target = $_POST['target'] ?? '';
 $data = $_POST['data'] ?? '';
+$admin_password = $_POST['admin_password'] ?? '';
+$admin_token = $_POST['admin_token'] ?? '';
+$action = $_POST['action'] ?? '';
 
 $dir = "rooms";
 if (!is_dir($dir)) mkdir($dir);
 
-$users_file = "$dir/$room-users.txt";
+$users_file = "$dir/$room-users.json";
 $signals_file = "$dir/$room-signals.txt";
 $chat_file = "$dir/$room-chat.txt";
+$admin_file = "$dir/$room-admin.json";
 
-// -- Manage users: join, leave, list --
-if ($type === 'join') {
-    $users = file_exists($users_file) ? explode("\n", trim(file_get_contents($users_file))) : [];
-    if (!in_array($user, $users)) {
-        $users[] = $user;
-        file_put_contents($users_file, implode("\n", $users));
+$ROOM_ADMIN_PASSWORD = "GoDodgers!";
+
+// Helper: Get all users from JSON file
+function get_users($users_file) {
+    if (!file_exists($users_file)) return [];
+    $users = json_decode(file_get_contents($users_file), true);
+    if (!is_array($users)) $users = [];
+    return $users;
+}
+function save_users($users_file, $users) {
+    file_put_contents($users_file, json_encode($users));
+}
+
+// --- ADMIN LOGIN: returns a temporary token ---
+if ($type === 'admin_login') {
+    global $ROOM_ADMIN_PASSWORD, $admin_file, $admin_password;
+    if ($admin_password === $ROOM_ADMIN_PASSWORD) {
+        $token = bin2hex(random_bytes(16));
+        file_put_contents($admin_file, json_encode(['token' => $token, 'time' => time()]));
+        echo json_encode(['success' => true, 'token' => $token]);
+    } else {
+        echo json_encode(['success' => false]);
     }
-    echo json_encode($users);
     exit;
 }
-if ($type === 'get_users') {
-    $users = file_exists($users_file) ? explode("\n", trim(file_get_contents($users_file))) : [];
-    echo json_encode($users);
+function verify_admin($admin_file, $token) {
+    if (!file_exists($admin_file)) return false;
+    $admin = json_decode(file_get_contents($admin_file), true);
+    if (!$admin || !isset($admin['token'])) return false;
+    // Token expires in 2 hours
+    if ($token === $admin['token'] && time() - $admin['time'] < 7200) return true;
+    return false;
+}
+
+// --- ADMIN ACTIONS: kick, mute, end_meeting ---
+if ($type === 'admin_action') {
+    if (!verify_admin($admin_file, $admin_token)) { http_response_code(401); exit; }
+    if ($action === 'kick' && $target) {
+        // Send a custom kick signal
+        file_put_contents($signals_file, "ADMIN|$target|".json_encode(['type'=>'admin_kick','target'=>$target])."\n", FILE_APPEND);
+    }
+    if ($action === 'mute' && $target) {
+        file_put_contents($signals_file, "ADMIN|$target|".json_encode(['type'=>'admin_mute','target'=>$target])."\n", FILE_APPEND);
+    }
+    if ($action === 'end_meeting') {
+        file_put_contents($signals_file, "ADMIN|all|".json_encode(['type'=>'admin_end_meeting'])."\n", FILE_APPEND);
+    }
+    echo "OK";
     exit;
 }
 
-// -- Send or get signaling messages --
+// -- Heartbeat --
+if ($type === 'heartbeat') {
+    $users = get_users($users_file);
+    $users[$user] = time();
+    save_users($users_file, $users);
+    echo "OK";
+    exit;
+}
+
+// -- Join --
+if ($type === 'join') {
+    $users = get_users($users_file);
+    $users[$user] = time();
+    save_users($users_file, $users);
+    echo json_encode(array_keys($users));
+    exit;
+}
+
+// -- Leave --
+if ($type === 'leave') {
+    $users = get_users($users_file);
+    unset($users[$user]);
+    save_users($users_file, $users);
+    echo "OK";
+    exit;
+}
+
+// -- Get users: active in last 120s --
+if ($type === 'get_users') {
+    $users = get_users($users_file);
+    $now = time();
+    $timeout = 120;
+    $active = [];
+    foreach ($users as $u => $t) {
+        if ($now - $t <= $timeout) {
+            $active[$u] = $t;
+        }
+    }
+    save_users($users_file, $active);
+    echo json_encode(array_keys($active));
+    exit;
+}
+
+// -- Signaling --
 if ($type === 'signal') {
-    // Save: from|to|signaltype|data
     file_put_contents($signals_file, "$user|$target|$data\n", FILE_APPEND);
     echo "OK";
     exit;
@@ -47,16 +127,14 @@ if ($type === 'get_signals') {
             unset($lines[$i]);
         }
     }
-    // Remove delivered signals
     file_put_contents($signals_file, implode("\n", $lines));
     echo json_encode($out);
     exit;
 }
 
-// -- Chat feature: append and read chat messages --
+// -- Chat --
 if ($type === 'chat_send') {
     $timestamp = time();
-    // Save: timestamp|user|message
     file_put_contents($chat_file, "$timestamp|$user|$data\n", FILE_APPEND);
     echo "OK";
     exit;
