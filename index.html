@@ -36,6 +36,16 @@
   <button id="screenShareBtn">Share Screen</button>
   <input id="roomInput" placeholder="Room name" />
   <button id="joinBtn">Join Room</button>
+
+  <div id="incomingCallModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:white; padding:2em; border-radius:8px; text-align:center;">
+      <h3 id="callerName"></h3>
+      <p>is calling you...</p>
+      <button id="answerBtn" style="background:green;color:white;">Answer</button>
+      <button id="declineBtn" style="background:red;color:white;">Decline</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

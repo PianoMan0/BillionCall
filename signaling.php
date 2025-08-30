@@ -201,5 +201,9 @@ if ($type === 'chat_get') {
     echo json_encode($out);
     exit;
 }
+if ($type === 'call_offer') {
+    echo json_encode(['success'=>true, 'data'=>$data]);
+    exit;
+}
 
 echo json_encode(['error'=>'Invalid']);

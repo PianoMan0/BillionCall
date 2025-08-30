@@ -559,8 +559,74 @@ function showAnalytics() {
   }
 }
 
-window.addEventListener('beforeunload', () => {
-  if (room && userId) {
-    navigator.sendBeacon('signaling.php', `room=${encodeURIComponent(room)}&user=${encodeURIComponent(userId)}&type=leave`);
-  }
-});
+// Show incoming call modal
+function showIncomingCall(caller) {
+  document.getElementById('callerName').textContent = caller;
+  document.getElementById('incomingCallModal').style.display = 'flex';
+}
+
+// Hide incoming call modal
+function hideIncomingCall() {
+  document.getElementById('incomingCallModal').style.display = 'none';
+}
+
+// Example: Listen for incoming call signals (replace with your signaling logic)
+function listenForCalls() {
+  setInterval(async () => {
+    // Replace with your actual signaling fetch
+    const response = await fetch('signaling.php', {
+      method: 'POST',
+      body: new URLSearchParams({
+        type: 'get_signals',
+        room: currentRoom,
+        user: currentUser
+      })
+    });
+    const signals = await response.json();
+    signals.forEach(([from, data]) => {
+      try {
+        const signal = JSON.parse(data);
+        if (signal.type === 'call_offer') {
+          showIncomingCall(from);
+          // Store caller for later use
+          window._incomingCaller = from;
+        }
+      } catch (e) {}
+    });
+  }, 2000);
+}
+
+// Handle answer/decline
+document.getElementById('answerBtn').onclick = async function() {
+  hideIncomingCall();
+  // Send answer signal (replace with your signaling logic)
+  await fetch('signaling.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      type: 'signal',
+      room: currentRoom,
+      user: currentUser,
+      target: window._incomingCaller,
+      data: JSON.stringify({type: 'call_answer'})
+    })
+  });
+  // Start WebRTC connection here
+};
+
+document.getElementById('declineBtn').onclick = async function() {
+  hideIncomingCall();
+  // Send decline signal (replace with your signaling logic)
+  await fetch('signaling.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      type: 'signal',
+      room: currentRoom,
+      user: currentUser,
+      target: window._incomingCaller,
+      data: JSON.stringify({type: 'call_decline'})
+    })
+  });
+};
+
+// Call this after joining a room
+// listenForCalls();
