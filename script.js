@@ -628,5 +628,65 @@ document.getElementById('declineBtn').onclick = async function() {
   });
 };
 
-// Call this after joining a room
-// listenForCalls();
+// Account logic
+function showLogin() {
+  document.getElementById('loginDiv').style.display = '';
+  document.getElementById('signupDiv').style.display = 'none';
+  document.getElementById('userDiv').style.display = 'none';
+}
+function showSignup() {
+  document.getElementById('loginDiv').style.display = 'none';
+  document.getElementById('signupDiv').style.display = '';
+  document.getElementById('userDiv').style.display = 'none';
+}
+function showUser(username) {
+  document.getElementById('loginDiv').style.display = 'none';
+  document.getElementById('signupDiv').style.display = 'none';
+  document.getElementById('userDiv').style.display = '';
+  document.getElementById('currentUser').textContent = 'Logged in as: ' + username;
+  document.getElementById('mainApp').style.display = '';
+}
+
+document.getElementById('showSignupBtn').onclick = showSignup;
+document.getElementById('showLoginBtn').onclick = showLogin;
+
+document.getElementById('signupBtn').onclick = async function() {
+  const username = document.getElementById('signupUsername').value;
+  const password = document.getElementById('signupPassword').value;
+  const res = await fetch('accounts.php', {
+    method: 'POST',
+    body: new URLSearchParams({action:'signup', username, password})
+  });
+  const data = await res.json();
+  if (data.success) {
+    showUser(username);
+    window.currentUser = username;
+  } else {
+    document.getElementById('signupError').textContent = data.error || 'Signup failed';
+  }
+};
+
+document.getElementById('loginBtn').onclick = async function() {
+  const username = document.getElementById('loginUsername').value;
+  const password = document.getElementById('loginPassword').value;
+  const res = await fetch('accounts.php', {
+    method: 'POST',
+    body: new URLSearchParams({action:'login', username, password})
+  });
+  const data = await res.json();
+  if (data.success) {
+    showUser(username);
+    window.currentUser = username;
+  } else {
+    document.getElementById('loginError').textContent = data.error || 'Login failed';
+  }
+};
+
+document.getElementById('logoutBtn').onclick = function() {
+  window.currentUser = null;
+  document.getElementById('mainApp').style.display = 'none';
+  showLogin();
+};
+
+// On page load, show login
+showLogin();

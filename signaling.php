@@ -155,7 +155,6 @@ if ($type === 'get_users') {
 
 // -- Signaling (audio/video) --
 if ($type === 'signal') {
-    // Optionally, validate $data as JSON for audio/video signaling
     if (empty($data)) {
         echo json_encode(['error'=>'No data']);
         exit;

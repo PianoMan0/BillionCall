@@ -7,6 +7,28 @@
 </head>
 <body>
   <h2>BillionCall</h2>
+  <div id="accountPanel">
+  <div id="loginDiv">
+    <center><p>Welcome to BillionCall! Before we get started, we need you to create an account. <b>Do not</b> make more than one account or you might be permanently banned.</p></center>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <button id="showSignupBtn">Sign Up</button>
+    <div id="loginError" style="color:red;"></div>
+  </div>
+  <div id="signupDiv" style="display:none;">
+    <input type="text" id="signupUsername" placeholder="Username">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <button id="signupBtn">Sign Up</button>
+    <button id="showLoginBtn">Back to Login</button>
+    <div id="signupError" style="color:red;"></div>
+  </div>
+  <div id="userDiv" style="display:none;">
+    <span id="currentUser"></span>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+  <div id="mainApp" style="display:none;">
   <div id="container">
     <div id="videos">
       <video id="localVideo" autoplay playsinline muted></video>
@@ -44,6 +66,7 @@
       <button id="answerBtn" style="background:green;color:white;">Answer</button>
       <button id="declineBtn" style="background:red;color:white;">Decline</button>
     </div>
+  </div>
   </div>
 
   <script src="script.js"></script>
