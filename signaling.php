@@ -84,7 +84,7 @@ function verify_admin($admin_file, $token) {
     return false;
 }
 
-// --- ADMIN ACTIONS: kick, mute, end_meeting ---
+// --- ADMIN ACTIONS ---
 if ($type === 'admin_action') {
     if (!verify_admin($admin_file, $admin_token)) { http_response_code(401); exit; }
     if ($action === 'kick' && $target) {
