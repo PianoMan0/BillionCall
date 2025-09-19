@@ -50,9 +50,15 @@ video {
   text-align: left;
 }
 
+.image {
+  width: auto;
+  height: auto;
+}
+
 #chat-form {
   display: flex;
   border-top: 1px solid #ccc;
+  position: relative;
 }
 
 #chat-input {
@@ -65,6 +71,18 @@ video {
 
 #chat-form button {
   padding: 8px 16px;
+}
+
+.send-container {
+  margin-top: -20px;
+}
+
+#chat-form input[type="file"] {
+  margin-bottom: -20px;
+}
+
+.send-container > * {
+  margin-top: 0;
 }
 
 #controls button {
@@ -93,3 +111,23 @@ video {
   font-size: 20px;
   cursor: pointer;
 }
+.coded-by-pianoman0{
+  font-family:"IBM Plex Mono", monospace;
+  position:fixed;
+  bottom:20px;
+  left:45%;
+  display:inline-flex;
+  padding:8px 12px;
+  align-items:center;
+  color:black;
+  text-decoration:none;
+  background-color:rgb(255, 255, 255);
+  border-radius:6px;
+  font-size:12px;
+  box-shadow:0 1px 3px rgb(0 0 0 / 20%), 0 6px 13px rgb(0 0 0 / 20%);
+  transition:all 0.2s ease-in-out;
+  z-index: 1000;
+}
+.coded-by-pianoman0:hover{
+  box-shadow:0 1px 3px rgb(0 0 0 / 50%), 0 6px 13px rgb(0 0 0 / 40%);
+  }

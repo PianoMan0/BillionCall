@@ -457,6 +457,16 @@ async function pollChat() {
   }
 }
 
+document.getElementById('imageInput').addEventListener('change', function() {
+  const file = this.files[0];
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    // Send image data to server
+    sendImageToServer(file, event.target.result);
+  };
+  reader.readAsDataURL(file);
+});
+
 function addChatMessage(user, message, ts) {
   const div = document.createElement('div');
   if (user === userId) {
@@ -466,6 +476,7 @@ function addChatMessage(user, message, ts) {
   }
   chatMessages.appendChild(div);
 }
+
 
 function escapeHtml(unsafe) {
   return unsafe.replace(/[<>&"'`]/g, c => ({
