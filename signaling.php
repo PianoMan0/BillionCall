@@ -180,9 +180,9 @@ if ($type === 'get_signals') {
 }
 
 // -- Chat --
-if ($type === 'chat_send') {
+if ($action === 'chat_send') {
     $timestamp = time();
-    file_put_contents($chat_file, "$timestamp|$user|".str_replace("\n"," ",$data)."\n", FILE_APPEND | LOCK_EX);
+    file_put_contents($chat_file, "$timestamp|$username|".str_replace("\n"," ",$data)."\n", FILE_APPEND | LOCK_EX);
     echo json_encode(['success'=>true]);
     exit;
 }

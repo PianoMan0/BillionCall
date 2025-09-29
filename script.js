@@ -649,6 +649,7 @@ function showSignup() {
   document.getElementById('loginDiv').style.display = 'none';
   document.getElementById('signupDiv').style.display = '';
   document.getElementById('userDiv').style.display = 'none';
+  document.getElementById('showSignupBtn').onclick = showSignup;
 }
 function showUser(username) {
   document.getElementById('loginDiv').style.display = 'none';
