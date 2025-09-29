@@ -1,81 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BillionCall - The ultimate communication experience.">
-  <meta name="keywords" content="video, chat, call, communication, billion">
-  <meta name="author" content="PianoMan0">
-  <title>BillionCall</title>
-  <link rel="stylesheet" href="call.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Page</title>
+    <link rel="stylesheet" href="call_landing.css">
 </head>
 <body>
-  <h2>BillionCall</h2>
-  <div id="accountPanel">
-  <div id="loginDiv">
-    <center><p>Welcome to BillionCall! Before we get started, we need you to create an account. <b>Do not</b> make more than one account or you might be permanently banned.</p></center>
-    <input type="text" id="loginUsername" placeholder="Username">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button id="loginBtn">Login</button>
-    <button id="showSignupBtn">Sign Up</button>
-    <div id="loginError" style="color:red;"></div>
-  </div>
-  <div id="signupDiv">
-    <input type="text" id="signupUsername" placeholder="Username">
-    <input type="password" id="signupPassword" placeholder="Password">
-    <button id="signupBtn">Sign Up</button>
-    <button id="showLoginBtn">Back to Login</button>
-    <div id="signupError" style="color:red;"></div>
-  </div>
-  <div id="userDiv" style="display:none;">
-    <span id="currentUser"></span>
-    <button id="logoutBtn">Logout</button>
-  </div>
-</div>
-  <div id="mainApp" style="display:none;">
-  <div id="container">
-    <div id="videos">
-      <video id="localVideo" autoplay playsinline muted></video>
-      <div id="controls">
-        <button id="muteBtn">Mute</button>
-        <button id="videoBtn">Video Off</button>
-      </div>
-    </div>
-    <div id="chat">
-      <div id="chat-messages"></div>
-      <form id="chat-form">
-        <input id="chat-input" autocomplete="off" placeholder="Type a message..." />
-        <input type="file" id="imageInput" accept="image/*">
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </div>
-  <div id="adminLoginDiv">
-  <input type="password" id="adminPasswordInput" placeholder="Admin password">
-  <button id="adminLoginBtn">Login as Admin</button>
-  </div>
+  <center><h1>Welcome to BillionCall! Ya gotta enter the password first...</h1></center>
+  <p>P.S. please do not abuse BillionCall, it's run by a single developer :D</p>
+    <form id="password-form">
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password" name="password">
+        <button id="submit-btn">Submit</button>
+    </form>
 
-  <div id="adminPanel" style="display:none;">
-  <h3>Admin Panel</h3>
-  <div id="adminUserList"></div>
-  <button id="endMeetingBtn" style="background:red;color:white;">End Meeting</button>
-  </div>
-  <button id="screenShareBtn">Share Screen</button>
-  <input id="roomInput" placeholder="Room name" />
-  <button id="joinBtn">Join Room</button>
-
-  <div id="incomingCallModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
-    <div style="background:white; padding:2em; border-radius:8px; text-align:center;">
-      <h3 id="callerName"></h3>
-      <p>is calling you...</p>
-      <button id="answerBtn" style="background:green;color:white;">Answer</button>
-      <button id="declineBtn" style="background:red;color:white;">Decline</button>
-    </div>
-  </div>
-  </div>
-<a href="https://github.com/pianoman0" target="_blank" class="coded-by-pianoman0">
-Coded By PianoMan0
-</a>
-  <script src="script.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
