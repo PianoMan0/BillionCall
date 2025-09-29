@@ -461,7 +461,7 @@ document.getElementById('imageInput').addEventListener('change', function() {
   const file = this.files[0];
   const reader = new FileReader();
   reader.onload = function(event) {
-    // Send image data to server
+    // Send image data to server!
     sendImageToServer(file, event.target.result);
   };
   reader.readAsDataURL(file);
@@ -570,21 +570,17 @@ function showAnalytics() {
   }
 }
 
-// Show incoming call modal
 function showIncomingCall(caller) {
   document.getElementById('callerName').textContent = caller;
   document.getElementById('incomingCallModal').style.display = 'flex';
 }
 
-// Hide incoming call modal
 function hideIncomingCall() {
   document.getElementById('incomingCallModal').style.display = 'none';
 }
-
-// Example: Listen for incoming call signals (replace with your signaling logic)
+// WIP
 function listenForCalls() {
   setInterval(async () => {
-    // Replace with your actual signaling fetch
     const response = await fetch('signaling.php', {
       method: 'POST',
       body: new URLSearchParams({
@@ -610,7 +606,6 @@ function listenForCalls() {
 // Handle answer/decline
 document.getElementById('answerBtn').onclick = async function() {
   hideIncomingCall();
-  // Send answer signal (replace with your signaling logic)
   await fetch('signaling.php', {
     method: 'POST',
     body: new URLSearchParams({
@@ -621,12 +616,10 @@ document.getElementById('answerBtn').onclick = async function() {
       data: JSON.stringify({type: 'call_answer'})
     })
   });
-  // Start WebRTC connection here
 };
 
 document.getElementById('declineBtn').onclick = async function() {
   hideIncomingCall();
-  // Send decline signal (replace with your signaling logic)
   await fetch('signaling.php', {
     method: 'POST',
     body: new URLSearchParams({
@@ -700,5 +693,4 @@ document.getElementById('logoutBtn').onclick = function() {
   showLogin();
 };
 
-// On page load, show login
 showLogin();
