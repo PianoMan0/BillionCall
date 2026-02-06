@@ -7,7 +7,7 @@ submitBtn.addEventListener('click', (e) => {
 
     if (passwordInput === 'thehackstrikesback') {
         window.location.href = 'call.html';
-        alert('Welcome to the secret page!');
+        alert('Welcome to BillionCall!');
     } else {
         alert('Incorrect password. Try again!');
     }

@@ -56,10 +56,9 @@ video {
 }
 
 #chat-form {
-  display: block;
+  display: flex;
   border-top: 1px solid #ccc;
   position: relative;
-  padding-bottom: 10px;
 }
 
 #chat-input {
@@ -75,7 +74,7 @@ video {
 }
 
 .send-container {
-  padding-left: 0;
+  margin-top: -20px;
 }
 
 #chat-form input[type="file"] {
@@ -111,9 +110,6 @@ video {
   border: none;
   font-size: 20px;
   cursor: pointer;
-}
-canvas {
-  border: 1px solid black;
 }
 .coded-by-pianoman0{
   font-family:"IBM Plex Mono", monospace;

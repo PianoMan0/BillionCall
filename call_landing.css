@@ -23,6 +23,8 @@ body {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 #submit-btn {
@@ -35,5 +37,5 @@ body {
 }
 
 #submit-btn:hover {
-    background-color: #3e8e41;
+    background-color: rgb(0, 0, 240);
 }
